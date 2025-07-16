@@ -98,6 +98,16 @@ pipeline {
                         build job: '61-ingress-alb', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
                 }
+                stage('ecr') {
+                    steps {
+                        build job: '71-ecr', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
+                    }
+                }
+                stage('cdn') {
+                    steps {
+                        build job: '81-cdn', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
+                    }
+                }
             }
         }
     }
