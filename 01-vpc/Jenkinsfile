@@ -43,11 +43,11 @@ pipeline {
         }
 
         stage('apply or destroy') {
-            input {
-                submitter 'Naveen Rajoli'
-                message "Should we continue to ${params.ACTION}"
-                ok "yes, ${params.ACTION}"
-            }
+            // input {
+            //     submitter 'Naveen Rajoli'
+            //     message "Should we continue to ${params.ACTION}"
+            //     ok "yes, ${params.ACTION}"
+            // }
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-auth') {
                     sh """
