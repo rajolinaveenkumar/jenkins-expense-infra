@@ -64,7 +64,7 @@ pipeline {
         }
 
         failure {
-            echo "This will runs on;y if job fail"
+            echo "This will runs only if job fail"
         }
 
     }
