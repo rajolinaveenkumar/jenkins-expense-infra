@@ -1,0 +1,35 @@
+pipeline {
+    agent {
+        agent 'agent-1-label'
+    }
+
+    environment {
+        project = "expense"
+        environment = "dev"
+    }
+
+    parameters {
+        choice(name: 'ACTION', choice['apply', 'destroy'], description: 'Please Choose the Right Action')
+    }
+
+    options {
+        timeout(time: 40, unit: 'MINUTES')
+        ansiColor('xtrem')
+        disableConcurrentBuilds()        
+    }
+
+    stages {
+        stage('terraform init') {
+            steps {
+                withAWS(region: 'us-east-1', credentials: 'aws-auth') {
+                    sh """
+                        cd 01-vpc
+                        terraform init -reconfigure
+                    """
+                }
+            }
+        }
+    }
+
+
+}
