@@ -1,5 +1,7 @@
 resource "aws_acm_certificate" "cert" {
-    domain_name = "naveenrajoli.site"
+    #domain_name = "naveenrajoli.site" # if not using cdn
+    domain_name = "*.naveenrajoli.site" # if using cdn
+
     validation_method = "DNS"
 
     tags = merge(
