@@ -53,13 +53,13 @@ pipeline {
             }
         }
 
-        stage('Parllel Stages') {
+        stage('Parallel Stages') {
             when {
                 expression {
                     params.ACTION == 'apply'
                 }
             }
-            parllel {
+            parallel  {
                 stage('bastion') {
                     steps {
                         build job: '21-bastion', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
