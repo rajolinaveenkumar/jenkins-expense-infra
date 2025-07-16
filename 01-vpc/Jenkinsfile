@@ -30,6 +30,39 @@ pipeline {
                 }
             }
         }
+
+        stage('terraform plan') {
+            steps {
+                withAWS(region: 'us-east-1', credentials: 'aws-auth') {
+                    sh """
+                        cd 01-vpc
+                        terraform plan -out=tfplan
+                    """
+                }
+            }
+        }
+
+        // stage('apply or destroy') {
+        //     input {
+        //         meassage: "Should we continue to ${params.ACTION}"
+        //         ok: "yes ${params.ACTION}"
+        //     }
+        //     steps {
+        //         withAWS(region: 'us-east-1', credentials: 'aws-auth') {
+        //             sh """
+        //                 if [ ${params.ACTION} == 'apply' ]
+        //                 then
+        //                     cd 01-vpc
+        //                     terraform apply -auto-approve tfpaln
+        //                 elif [ ${params.ACTION} == 'destroy' ]
+        //                 then
+        //                     cd 01-vpc
+        //                     terraform destroy -auto-approve
+        //                 fi
+        //             """
+        //         }
+        //     }
+        }
     }
 
 
