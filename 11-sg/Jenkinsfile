@@ -57,7 +57,7 @@ pipeline {
     post {
         always {
             echo "this run always"
-            deleteDIR()
+            deleteDir()
         }
         success {
             echo "This will run only if job success"
