@@ -44,8 +44,8 @@ pipeline {
 
         stage('apply or destroy') {
             input {
-                meassage: "Should we continue to ${params.ACTION}"
-                ok: "yes ${params.ACTION}"
+                message: "Should we continue to ${params.ACTION}"
+                ok: "yes, ${params.ACTION}"
             }
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-auth') {
