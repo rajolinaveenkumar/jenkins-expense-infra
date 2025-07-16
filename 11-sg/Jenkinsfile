@@ -52,6 +52,54 @@ pipeline {
                 }
             }
         }
+
+        stage('Parllel Stages') {
+            when {
+                expression {
+                    params.ACTION == 'apply'
+                }
+            }
+            parllel {
+                stage('bastion') {
+                    steps {
+                        build job: '21-bastion', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
+                        // wait: false means --> Start the downstream job, but don’t wait for it to finish. if nothing mention it will take default value is true.                     
+                    }
+                }
+                stage('rds') {
+                    steps {
+                        build job: '31-rds', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
+                    }
+                }
+                stage('eks') {
+                    steps {
+                        build job: '41-eks', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
+                    }
+                }
+
+            }
+        }
+
+        stage('Sequential')
+            when  {
+                experssion {
+                    params.ACTION == 'apply'
+                }
+            }
+            stages {
+                stage('acm') {
+                    steps {
+                        build job: '51-acm', parameters: [string(name: 'ACTION', value: 'apply')]
+                        // If wait: false is not mentioned, it will default to true, which means Jenkins will wait for the downstream job to complete before moving to the next stage.
+                    }
+                }
+                stage('ingress-alb') {
+                    steps {
+                        build job: '61-ingress-alb', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
+                    }
+                }
+            }
+
     }
 
     post {

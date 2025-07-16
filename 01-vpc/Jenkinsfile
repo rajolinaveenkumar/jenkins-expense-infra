@@ -72,7 +72,7 @@ pipeline {
             }
             steps {
                 build job: '11-sg', parameters: [string(name:'ACTION', value: 'apply')], wait: false
-                // wait: false means --> Start the downstream job, but don’t wait for it to finish. Continue this pipeline immediately.
+                // wait: false means --> Start the downstream job, but don’t wait for it to finish. if nothing mention it will take default value is true. y.
             }
         }
 
