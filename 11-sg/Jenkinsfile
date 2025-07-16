@@ -82,7 +82,7 @@ pipeline {
 
         stage('Sequential') {
             when  {
-                experssion {
+                expression {
                     params.ACTION == 'apply'
                 }
             }
