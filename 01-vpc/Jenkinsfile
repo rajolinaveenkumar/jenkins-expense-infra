@@ -4,13 +4,14 @@ pipeline {
     }
 
     environment {
-        project = "expense"
-        environment = "dev"
+        project = 'expense'
+        environment = 'dev'
     }
 
     parameters {
-        choice(name: 'ACTION', choice['apply', 'destroy'], description: 'Please Choose the Right Action')
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Please Choose the Right Action')
     }
+  
 
     options {
         timeout(time: 40, unit: 'MINUTES')
