@@ -1,6 +1,6 @@
 resource "aws_key_pair" "eks" {
   key_name   = "myec2-key-eks"
-  public_key = file("~/.ssh/myec2keyeks.pub")
+  public_key = file("myec2keyeks.pub")
 }
 
 module "eks" {
