@@ -44,7 +44,8 @@ pipeline {
 
         stage('apply or destroy') {
             input(
-                message: "Should we continue to ${params.ACTION}"
+                submitter: 'Naveen Rajoli',
+                message: "Should we continue to ${params.ACTION}",
                 ok: "yes, ${params.ACTION}"
             )
             steps {
