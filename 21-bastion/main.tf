@@ -31,3 +31,20 @@ output "bastion_ip" {
   value = aws_instance.this.public_ip
 }
 
+# resource "aws_route53_record" "bastion_private_ip" {
+#   zone_id = local.zone_id
+#   name    = "bastion.${local.zone_name}"
+#   type    = "A"
+#   ttl     = 5
+#   records = [aws_instance.this.private_ip]
+#   allow_overwrite = true
+# }
+
+# resource "aws_route53_record" "bastion_public_ip" {
+#   zone_id = local.zone_id
+#   name    = "bastion.${local.zone_name}"
+#   type    = "A"
+#   ttl     = 5
+#   records = [aws_instance.this.public_ip]
+#   allow_overwrite = true
+# }
