@@ -1,0 +1,71 @@
+pipeline {
+    agent {
+        label 'agent-1-label'
+    } 
+
+    options {
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+    }
+
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], descripotion: 'Please select an a Action')
+    }
+
+    stages {
+        stage('terraform init') {
+            steps {
+                withAWS(region: 'us-east-1', credentials: 'aws-auth' ) {
+                    sh """
+                        cd 21-bastion
+                        terraform init -reconfigure
+                    """
+                }
+            }
+        }
+
+        stage('terraform plan') {
+            steps {
+                withAWS(region: 'us-east-1', credentials: 'aws-auth' ) {
+                    sh """
+                        cd 21-bastion
+                        terraform plan -out=tfplan
+                    """
+                }
+            }
+        }
+
+        stage('terraform apply or destroy ') {
+            steps {
+                withAWS(region: 'us-east-1', credentials: 'aws-auth' ) {
+                    sh """
+                        cd 21-bastion
+                        if [ ${params.ACTION} == 'apply' ]
+                        then
+                            terraform apply -auto-approve tfplan
+                        elif
+                            terraform destroy -auto-approve
+                        fi
+                    """
+                }
+            }
+        }
+    }
+
+
+    post {
+        always {
+            echo "this run always"
+            deleteDir()
+        }
+        success {
+            echo "This will run only if job success"
+        }
+
+        failure {
+            echo "This will runs on;y if job fail"
+        }
+
+    }
+}
