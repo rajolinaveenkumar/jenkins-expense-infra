@@ -80,7 +80,7 @@ pipeline {
             }
         }
 
-        stage('Sequential')
+        stage('Sequential') {
             when  {
                 experssion {
                     params.ACTION == 'apply'
@@ -99,7 +99,7 @@ pipeline {
                     }
                 }
             }
-
+        }
     }
 
     post {
