@@ -62,7 +62,7 @@ resource "aws_lb_target_group" "target_group" {
   deregistration_delay = 60
 
   health_check {
-    path                = "/health"
+    path                = "/"
     protocol            = "HTTP"
     port                = "8079"
     interval            = 10

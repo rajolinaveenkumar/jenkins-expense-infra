@@ -9,6 +9,8 @@ lvextend -l +50%FREE /dev/RootVG/varVol
 xfs_growfs /
 xfs_growfs /var
 
+
+
 # docker installation
 dnf -y install dnf-plugins-core
 dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
@@ -42,4 +44,6 @@ curl -sS https://webinstall.dev/k9s | bash
 
 # mysql
 dnf install mysql -y
+
+yum install java-17-openjdk -y
 
